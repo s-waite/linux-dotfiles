@@ -36,11 +36,11 @@ index-sort = true
 format = <label-state>
 
 label-focused = %name%
-label-focused-padding = 6
+label-focused-padding = 4
 label-focused-background = #EBCB8B
 
 label-unfocused = %name%
-label-unfocused-padding = 6
+label-unfocused-padding = 4
 label-unfocused-background = #434C5E
 
 [module/network]
