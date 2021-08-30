@@ -1,0 +1,78 @@
+# vim: ft=dosini
+[bar/samsbar]
+fixed-center = true
+width = 100%
+height = 20
+background = #4C566A
+font-0 = DroidSansMono:size=11;3
+tray-position = right
+separator = |
+padding = 0
+module-margin = 1
+tray-padding = 10
+
+modules-left = i3
+modules-center = date
+modules-right = cpu memory pulseaudio network
+
+[settings]
+
+[module/date]
+type = internal/date
+interval = 1.0
+date = %m-%d-%Y%
+time = %l:%M
+date-alt = %A, %B %d %Y
+time-alt = %H:%M:%S
+
+format = <label>
+label = %date% %time%
+
+[module/i3]
+type = internal/i3
+enable-scroll = false
+index-sort = true
+
+format = <label-state>
+
+label-focused = %name%
+label-focused-padding = 6
+label-focused-background = #EBCB8B
+
+label-unfocused = %name%
+label-unfocused-padding = 6
+label-unfocused-background = #434C5E
+
+[module/network]
+type = internal/network
+interface = eno1
+interval = 3.0
+
+format-connected = <label-connected>
+label-connected = %downspeed%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+interval = 5
+click-right = pavucontrol
+
+format-volume = <label-volume>
+label-volume = vol %percentage%%
+
+format-muted = <label-muted>
+label-muted = muted
+
+[module/memory]
+type = internal/memory
+interval = 3
+
+format = <label>
+label = ram %gb_used%
+
+[module/cpu]
+type = internal/cpu
+interval = 1
+
+format = <label>
+label = cpu %percentage%%
+

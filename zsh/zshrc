@@ -1,0 +1,89 @@
+# SPELLING ERROR PROMPT SETUP SPROMPT="correct %B%R%b to %B%r%b? [n]o [y]es [a]bort [e]dit "
+##### OPTIONS SETUP #####
+# Try to correct the spelling of commands. Note that, when the HASH_LIST_ALL option is not set or when some directories in the path are not readable,
+# this may falsely report spelling errors the first time some commands are used.
+# The shell variable CORRECT_IGNORE may be set to a pattern to match words that will never be offered as corrections.
+setopt CORRECT
+
+# Try to correct the spelling of all arguments in a line.
+# The shell variable CORRECT_IGNORE_FILE may be set to a pattern to match file names that will never be offered as corrections.
+#setopt CORRECT_ALL
+
+# Whenever a command completion or spelling correction is attempted, make sure the entire command path is hashed first. 
+# This makes the first completion slower but avoids false reports of spelling errors.
+setopt HASH_LIST_ALL
+
+# Ensure glob is case-insensitive
+setopt NO_CASE_GLOB
+
+# enable the next line to use the compinstall
+# autoload -U compinstall
+
+# The following lines were added by compinstall
+zstyle ':completion:*' completer _complete _ignored _approximate
+zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
+zstyle :compinstall filename '/Users/sam/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+############################################## MY SETTINGS ############################################
+# GIT INTEGRATION
+setopt PROMPT_SUBST
+source ~/.zshplugins/zsh-git-support.sh
+#PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+PROMPT='%F{215}%n%f@%m in %F{229}%d%f $(__git_ps1 "(%s)") %# '
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWCOLORHINTS=1
+
+# CONFIG ALIASES
+EDITOR='vim'
+alias kittyconfig='$EDITOR ~/.config/kitty/kitty.conf'
+alias zshconfig='$EDITOR ~/.zshrc'
+alias i3config='$EDITOR ~/.config/i3/config'
+alias vimconfig='$EDITOR ~/.vimrc'
+alias polybarconfig='$EDITOR ~/.config/polybar/config'
+
+# OTHER ALIASES
+alias ls='ls --color'
+
+# COLORS
+test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
+
+# VIM MODE
+source $HOME/.zshplugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+
+# NNN CONFIG
+export NNN_TMPFILE='/tmp/nnn'
+# cd on quit
+n ()
+{
+    # Block nesting of nnn in subshells
+    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+        echo "nnn is already running"
+        return
+    fi
+
+    # The default behaviour is to cd on quit (nnn checks if NNN_TMPFILE is set)
+    # To cd on quit only on ^G, remove the "export" as in:
+    #     NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
+    # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
+    # stty start undef
+    # stty stop undef
+    # stty lwrap undef
+    # stty lnext undef
+
+    nnn -a -d -e -o -x -H
+
+    if [ -f "$NNN_TMPFILE" ]; then
+            . "$NNN_TMPFILE"
+            rm -f "$NNN_TMPFILE" > /dev/null
+    fi
+}
+
+BLK="0B" CHR="0B" DIR="04" EXE="06" REG="00" HARDLINK="06" SYMLINK="06" MISSING="00" ORPHAN="09" FIFO="06" SOCK="0B" OTHER="06"
+export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"

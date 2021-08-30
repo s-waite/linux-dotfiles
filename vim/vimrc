@@ -1,0 +1,9 @@
+" GENERAL
+syntax on " highlight syntax
+set number " show line numbers
+set noswapfile " disable the swapfile
+set hlsearch " highlight all results
+set ignorecase " ignore case in search
+set incsearch " show search results as you type
+set scrolloff=10 " always show some lines after the cursor for context
+set showcmd
