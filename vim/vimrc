@@ -1,9 +1,132 @@
-" GENERAL
+" vim: foldmethod=marker formatoptions-=cro
+" {{{ GENERAL
 syntax on " highlight syntax
+set nocompatible " disable compatibility with vi
+set showmatch " show matching
 set number " show line numbers
+set relativenumber " show relative numbers
 set noswapfile " disable the swapfile
 set hlsearch " highlight all results
 set ignorecase " ignore case in search
 set incsearch " show search results as you type
 set scrolloff=10 " always show some lines after the cursor for context
-set showcmd
+set showcmd " show commands as they are being typed
+set cursorcolumn " highlight column cursor is in 
+set cursorline " highlight line cursor is on
+set tabstop=4 " number of colums occupied by tab
+set expandtab " converts tabs to whitespaces
+set shiftwidth=4 " width for autoindents
+set autoindent " indent line same amount as last one
+set backspace=indent,eol,start " make backspace work more predictably
+set clipboard=unnamed " using the system clipboard
+set sidescrolloff=5 " always show some lines to the side of the cursor
+set wildmode=longest,list " bash-like tab completion
+set wrap
+set path=.,,**
+highlight VertSplit cterm=NONE
+filetype plugin on
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+" }}}
+
+" {{{ KEY MAPPING
+nmap <S-Enter> O<Esc>
+nmap <CR> o<Esc>
+inoremap jk <ESC>
+
+" WINDOWS
+" nnoremap <leader>wj :wincmd j<Enter>
+" nnoremap <leader>wk :wincmd k<Enter>
+" nnoremap <leader>wh :wincmd h<Enter>
+" nnoremap <leader>wl :wincmd l<Enter>
+" nnoremap <leader>ws :split<Enter>
+" nnoremap <leader>wsv :vsplit<Enter>
+" nnoremap <leader>wn :new<Enter>
+" nnoremap <leader>wnv :new<Enter>
+
+" " TABS
+" nnoremap <leader>tn :tabnew<Enter>
+" nnoremap <leader>tq :tabclose<Enter>
+" nnoremap <leader>tl :tabnext<Enter>
+" nnoremap <leader>th :tabprevious<Enter>
+" nnoremap <leader>1 1gt 
+" nnoremap <leader>2 2gt 
+" nnoremap <leader>3 3gt 
+" nnoremap <leader>4 4gt 
+" nnoremap <leader>5 5gt 
+" }}}
+
+" {{{ PLUGINS
+call plug#begin('~/.vim/plugged')
+" Plug 'dracula/vim', { 'as': 'dracula' }
+
+Plug 'sainnhe/everforest'
+
+Plug 'kana/vim-textobj-user'
+
+Plug 'kana/vim-textobj-line'
+
+Plug 'kana/vim-textobj-entire'
+
+Plug 'lervag/vimtex'
+let g:tex_flavor='latex'
+let g:vimtex_view_method='skim'
+let g:vimtex_syntax_enabled=1
+let g:vimtex_quickfix_mode=0
+
+Plug 'godlygeek/tabular'
+
+Plug 'tpope/vim-commentary'
+
+Plug 'nathanaelkane/vim-indent-guides'
+
+Plug 'tpope/vim-surround'
+
+Plug 'sirver/ultisnips'
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+let g:UltiSnipsEditSplit="context"
+
+Plug 'dense-analysis/ale'
+
+Plug 'turbio/bracey.vim'
+
+Plug 'preservim/nerdtree'
+
+Plug 'valloric/youcompleteme'
+let g:ycm_key_list_select_completion = ['<Right>']
+
+call plug#end()
+" " }}}
+
+" {{{ FILE TYPE SPECIFIC
+" autocmd filetype tex setlocal wrap linebreak 
+let g:markdown_folding = 1
+autocmd filetype markdown.pandoc setlocal conceallevel=2 wrap linebreak
+autocmd filetype tex setlocal conceallevel=0 linebreak 
+augroup pandoc_syntax
+    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+augroup END
+" }}}
+
+" {{{ THEME
+" colorscheme dracula
+" set termguicolors
+" highlight Normal ctermbg=NONE
+
+" colorscheme gruvbox
+" set background=dark
+" set termguicolors
+
+set background=dark
+let g:everforest_background='hard'
+colorscheme everforest
+set termguicolors
+" }}}
+
+" {{{ SPELLING
+set spelllang=en_us
+hi clear SpellBad
+hi clear SpellCap
+" hi SpellBad cterm=underline ctermfg=purple
+" }}}
