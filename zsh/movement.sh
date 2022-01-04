@@ -1,0 +1,6 @@
+bookmark_prefix="ff"
+documents_folder="/Users/sam/Documents/MBP"
+alias -g ${bookmark_prefix}d="${documents_folder}"
+alias -g ${bookmark_prefix}n="${documents_folder}/notes"
+alias -g ${bookmark_prefix}D="${HOME}/Downloads"
+alias -g ${bookmark_prefix}t="/Volumes/local_media/tv-shows"
